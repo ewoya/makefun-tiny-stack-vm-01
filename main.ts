@@ -1,8 +1,8 @@
 import{mkdirSync as MD,readdirSync as RD,readFileSync as RF,writeFileSync as WF}from'node:fs';
 import{join as JN}from'node:path';
 const SP="000101401010012022023033021021021021021021021011021021021011021021021021021021200210210200000011020010010001010";
-const NT=[8,15,3,5,2,4],BS=[0,16,32,48,64,80],OP=[];
-{let i=0;for(let g=0;g<6;g++)for(let k=0;k<NT[g];k++){const s=SP.substr(i*3,3);OP[BS[g]+k]=[+s[0],+s[1],+s[2]];i++;}}
+const NT=[8,15,3,5,2,4],BS=[0,16,32,48,64,80],IM=new Int32Array(256).fill(-1),PO=new Int32Array(256),PU=new Int32Array(256);
+{let i=0;for(let g=0;g<6;g++)for(let k=0;k<NT[g];k++){const s=SP.substr(i*3,3),o=BS[g]+k;IM[o]=+s[0];PO[o]=+s[1];PU[o]=+s[2];i++;}}
 const TE=new TextEncoder();
 function run(p,inp){
 const n=p.length,D=new Int32Array(256),C=new Int32Array(64),M=new Int32Array(256),o=new Uint8Array(65536);
@@ -11,9 +11,9 @@ const E=e=>[o.slice(0,ol),e];
 for(;;){
 if(st==1e6)return E(10);
 if(pc<0||pc>=n)return E(9);
-const op=p[pc],q=OP[op];
-if(q===undefined)return E(5);
-const im=q[0],po=q[1],pu=q[2];
+const op=p[pc],im=IM[op];
+if(im<0)return E(5);
+const po=PO[op],pu=PU[op];
 if(pc+im>=n)return E(9);
 st++;
 const nx=pc+1+im;
